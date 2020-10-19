@@ -60,6 +60,16 @@
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+  font-style: italic;
+  margin-bottom: 0;
+}
+.description2 {
+  margin-top: 0;
+  line-height: 1.5;
+  text-align: right;
+  display: block;
+  font-size: 1.2rem;
+  font-style: italic;
 }
 
 .code {
@@ -81,7 +91,11 @@
   margin-top: 3rem;
 }
 
-.card {
+.card,
+.cardStart,
+.cardSetting,
+.cardTheme,
+.cardLeaderboard {
   margin: 1rem;
   flex-basis: 45%;
   padding: 1.5rem;
@@ -95,17 +109,67 @@
 
 .card:hover,
 .card:focus,
-.card:active {
+.card:active,
+.cardSetting:hover,
+.cardSetting:focus,
+.cardSetting:active,
+.cardLeaderboard:hover,
+.cardLeaderboard:focus,
+.cardLeaderboard:active {
   color: #0070f3;
   border-color: #0070f3;
 }
 
-.card h3 {
+.cardStart:hover,
+.cardStart:focus,
+.cardStart:active {
+  color: #0ef193;
+  border-color: #0ef193;
+}
+
+.cardSetting:hover,
+.cardSetting:focus,
+.cardSetting:active {
+  color: #bd2e2e;
+  border-color: #bd2e2e;
+}
+
+.cardSetting p,
+.cardStart p,
+.cardLeaderboard p,
+.cardTheme p {
+  color: black;
+}
+
+.cardTheme:hover,
+.cardTheme:focus,
+.cardTheme:active {
+  border-image: linear-gradient(
+    to bottom right,
+    #b827fc 0%,
+    #2c90fc 25%,
+    #b8fd33 50%,
+    #fec837 75%,
+    #fd1892 100%
+  );
+  border-image-slice: 1;
+  border-radius: 10px;
+}
+
+.card h3,
+.cardStart h3,
+.cardTheme h3,
+.cardSetting h3,
+.cardLeaderboard h3 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
 }
 
-.card p {
+.card p,
+.cardStart p,
+.cardTheme p,
+.cardSetting p,
+.cardLeaderboard p {
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
@@ -113,6 +177,10 @@
 
 .logo {
   height: 1em;
+}
+
+.desc {
+  color: black;
 }
 
 @media (max-width: 600px) {
