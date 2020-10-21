@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 type Element = {
   name: string;
@@ -17,18 +17,15 @@ const Active = (props: Props) => {
 
   return (
     <>
-      {elements &&
-        elements.map((u, i) => {
-          <button
-            className={
-              i === activeIndex ? styles.active : styles.settings_button
-            }
-            onClick={() => setActiveIndex(i)}
-            key={u.name}
-          >
-            {u.name}
-          </button>;
-        })}
+      {elements.map((u, i) => (
+        <button
+          className={i === activeIndex ? styles.active : styles.settings_button}
+          onClick={() => setActiveIndex(i)}
+          key={u.name}
+        >
+          {u.name}
+        </button>
+      ))}
     </>
   );
 };
