@@ -201,8 +201,24 @@
   border: 2px solid black;
   border-radius: 10px;
   margin: 10px;
-  width: 30%;
+  width: 15%;
+  position: absolute;
+  z-index: 15;
+  top: 40%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
 }
+/* 
+#settings_containeroutput {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+  background: red;
+} */
 
 .settings_title {
   font-size: 25px;
@@ -230,7 +246,7 @@
   border: 2px solid grey;
   border-radius: 10px;
   text-decoration: none;
-  margin: 10px;
+  margin: 10px 10px 10px 0px;
   padding: 7px;
   margin-bottom: 30px;
   outline: none;
@@ -249,10 +265,10 @@
   font-size: 15px;
   color: grey;
   background-color: grey;
-  border: 3px solid grey;
+  border: 2px solid grey;
   border-radius: 10px;
   text-decoration: none;
-  margin: 10px;
+  margin: 10px 10px 10px 0px;
   padding: 7px;
   margin-bottom: 30px;
   outline: none;

@@ -1,11 +1,8 @@
 import React from "react";
+import Homepage from "./homepage/index";
 
 const App = () => {
-    return (
-        <div className="Main-Application">
-            <h1>Go to /homepage</h1>
-        </div>
-    );
+    return <Homepage />
 };
 
 export default App;
