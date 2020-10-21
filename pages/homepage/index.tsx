@@ -50,7 +50,7 @@ export default function Home() {
             <div className={styles.cardSetting}>
               <h3>Settings</h3>
               <p className="desc">
-                Alter the coding language, timing, lenght, corpus generation,
+                Alter the coding language, timing, length, corpus generation,
                 etc.
               </p>
             </div>
