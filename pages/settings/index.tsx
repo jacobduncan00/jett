@@ -1,5 +1,5 @@
 import React from "react";
-import LargeCard from "../reusables/large-card";
+import LargeCard from "../../components/large-card";
 import styles from "../../styles/Home.module.css";
 
 const Settings = () => {
