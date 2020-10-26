@@ -126,7 +126,7 @@
   cursor: pointer;
   color: #0070f3;
   border-color: #0070f3;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px #0070f3;
 }
 
 .cardStart:hover,
@@ -135,7 +135,7 @@
   cursor: pointer;
   color: #0ef193;
   border-color: #0ef193;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px #0ef193;
 }
 
 .cardSetting:hover,
@@ -144,6 +144,7 @@
   cursor: pointer;
   color: #bd2e2e;
   border-color: #bd2e2e;
+  box-shadow: 0 5px 15px #bd2e2e;
 }
 
 .cardSetting p,
@@ -167,7 +168,7 @@
   );
   border-image-slice: 1;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px #8817e6;
 }
 
 .card h3,
