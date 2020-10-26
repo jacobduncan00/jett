@@ -87,6 +87,13 @@
   cursor: pointer;
 }
 
+.chevronLink {
+  cursor: pointer;
+  display: inline;
+  float: left;
+  margin-top: 15px;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -211,12 +218,24 @@
   .footer {
     color: white;
     background-color: black;
+    height: 75px;
   }
+}
+
+.wrapperDiv {
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .settings_header {
   font-size: 50px;
   margin-left: 20px;
+  display: inline;
+  cursor: pointer;
+}
+
+.settings_headerinformation {
+  display: inline;
 }
 
 .settings_container {
