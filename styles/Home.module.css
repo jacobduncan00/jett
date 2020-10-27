@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
+
 .container {
   min-height: 50vh;
   padding: 0 0.5rem;
@@ -5,6 +7,58 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0;
+}
+
+.container2 {
+  background-color: #fffaf0;
+  border-radius: 10px;
+  min-height: 50vh;
+  padding: 50px;
+  margin: 0;
+  width: 700px;
+  max-width: 90%;
+  margin-top: 10rem;
+  border: 2px solid rgb(28, 100, 100);
+  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: 0 5px 15px #8796a7;
+}
+
+.timer {
+  position: absolute;
+  top: 3rem;
+  font-size: 3rem;
+  color: black;
+}
+
+.textDisplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  min-height: 150px;
+  font-size: 20px;
+  line-height: 1.5em;
+}
+
+.textInput {
+  border: 2px solid rgb(28, 100, 100);
+  color: black;
+  border-radius: 10px;
+  resize: none;
+  height: 10rem;
+  width: 600px;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  outline: none;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.textInput:focus {
+  border-color: black;
 }
 
 .main {
@@ -316,4 +370,8 @@
   color: black;
   border-color: black;
   cursor: pointer;
+}
+
+.textInput {
+  font-family: "Inconsolata", monospace;
 }
