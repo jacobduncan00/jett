@@ -25,6 +25,22 @@
   box-shadow: 0 5px 15px #8796a7;
 }
 
+.game {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 1.5rem !important;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 .timer {
   position: absolute;
   top: 3rem;
@@ -49,7 +65,7 @@
   border-radius: 10px;
   resize: none;
   height: 10rem;
-  width: 600px;
+  width: 100%;
   margin-top: 50px;
   margin-bottom: 0px;
   outline: none;
