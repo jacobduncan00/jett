@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import allowedKeys from "../../components/keys";
 import Timer from "../../components/timer";
 import GameCard from "../../components/game-card";
 import styles from "../../styles/Home.module.css";
@@ -7,12 +8,11 @@ import GameStats from '../../components/game-stats';
 let interval = null;
 
 function Game() {
-  const inputRef = null;
-  let outputRef = null;
+  const inputRef = useRef(null);
+  let outputRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
   const [input, setInput] = useState("");
-  const [corpus, setCorpus] = useState({});
   const [duration, setDuration] = useState(30);
   const [index, setIndex] = useState(0);
   const [correctIndex, setCorrectIndex] = useState(0);
@@ -22,12 +22,22 @@ function Game() {
   const [wpm, setWpm] = useState(0);
   const [cpm, setCpm] = useState(0);
   const [lastScore, setLastScore] = useState('0');
+  const [corpus, setCorpus] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://api.quotable.io/random"; // We need to make our own api with our backend to generate this for us
+      const response = await fetch(url);
+      const data = await response.json();
+      setCorpus(data.content);
+    };
+    fetchData();
+  }, []);
 
 
   const handleStart = () => {
     setStarted(true);
     setEnded(false);
-    setInput(corpus.corpus);
+    setInput(corpus);
     inputRef.current.focus();
     setTimer();
   }
@@ -53,7 +63,7 @@ function Game() {
   const handleTyping = (event) => {
     event.preventDefault();
     const { key } = event;
-    const corpusText = corpus.corpus;
+    const corpusText = corpus;
 
     if (key === corpusText.charAt(index)) {
       setIndex(index + 1);
@@ -74,6 +84,9 @@ function Game() {
     const timeRemaining2 = parseInt(timeRemaining);
     const accuracy2 = Math.floor((index - errorIndex) / index * 1000);
     const wpm2 = Math.round(correctIndex / 5 / timeRemaining2);
+
+    // For some reason WPM is infinity here and IDK why
+    console.log(`Time Remaining: ${timeRemaining}, Accuracy: ${accuracy2}, WPM: ${wpm2}, Duration: ${duration}, CorrectIndex: ${correctIndex}`)
 
     if (index > 5) {
       setAccuracy(accuracy2);
@@ -110,15 +123,15 @@ function Game() {
               data={wpm}
               style={
                 wpm > 0 && wpm < 20 ? (
-                  { color: 'white', backgroundColor: '#eb4841' }
+                  { color: 'white', backgroundcolor: '#eb4841' }
                 ) : wpm >= 20 && wpm < 40 ? (
-                  { color: 'white', backgroundColor: '#f48847' }
+                  { color: 'white', backgroundcolor: '#f48847' }
                 ) : wpm >= 40 && wpm < 60 ? (
-                  { color: 'white', backgroundColor: '#ffc84a' }
+                  { color: 'white', backgroundcolor: '#ffc84a' }
                 ) : wpm >= 60 && wpm < 80 ? (
-                  { color: 'white', backgroundColor: '#a6c34c' }
+                  { color: 'white', backgroundcolor: '#a6c34c' }
                 ) : wpm >= 80 ? (
-                  { color: 'white', backgroundColor: '#4ec04e' }
+                  { color: 'white', backgroundcolor: '#4ec04e' }
                 ) : (
                             {}
                           )
@@ -161,14 +174,14 @@ function Game() {
                 className={`text-light mono quotes${started ? ' active' : ''}${isError
                   ? ' is-error'
                   : ''}`}
-                tabIndex="0"
-                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                onKeyDown={handleTyping}
                 ref={inputRef}
               >
                 {input}
               </div>
             ) : (
-                  <div className="mono quotes text-muted" tabIndex="-1" ref={inputRef}>
+                  <div className="mono quotes text-muted" tabIndex={-1} ref={inputRef}>
                     {input}
                   </div>
                 )}
