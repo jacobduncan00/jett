@@ -18,6 +18,7 @@ function Game() {
   const [correctIndex, setCorrectIndex] = useState(0);
   const [isError, setIsError] = useState(false);
   const [errorIndex, setErrorIndex] = useState(0);
+  const [prevCorrectIndex, setPrevCorrectIndex] = useState(1);
   const [accuracy, setAccuracy] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [cpm, setCpm] = useState(0);
@@ -70,23 +71,25 @@ function Game() {
       const currentCharacter = corpusText.substring(index + 1, index + corpusText.length);
       setInput(currentCharacter);
       setCorrectIndex(correctIndex + 1);
+      setPrevCorrectIndex(1);
       setIsError(false);
       outputRef.current.innerHTML += key;
     } else {
       if (allowedKeys.includes(key)) {
         setErrorIndex(errorIndex + 1);
+        setPrevCorrectIndex(prevCorrectIndex);
         setIsError(true);
         outputRef.current.innerHTML += `<span class="danger">${key}</span>`
       }
     }
 
     const timeRemaining = ((60 - duration) / 60).toFixed(2);
-    const timeRemaining2 = parseInt(timeRemaining);
+    //const timeRemaining2 = parseInt(timeRemaining);
     const accuracy2 = Math.floor((index - errorIndex) / index * 1000);
-    const wpm2 = Math.round(correctIndex / 5 / timeRemaining2);
+    const wpm2 = Math.round(((correctIndex / 1) / parseFloat(timeRemaining)) / (((prevCorrectIndex) / parseFloat(timeRemaining)) / 2)); // This - (uncorrectErrors/timeRemaining)
 
     // For some reason WPM is infinity here and IDK why
-    console.log(`Time Remaining: ${timeRemaining}, Accuracy: ${accuracy2}, WPM: ${wpm2}, Duration: ${duration}, CorrectIndex: ${correctIndex}`)
+    console.log(`Time Remaining: ${timeRemaining}, Accuracy: ${accuracy2}, WPM: ${wpm2}, Duration: ${duration}, CorrectIndex: ${correctIndex}, prevCorrectIndex: ${prevCorrectIndex}`)
 
     if (index > 5) {
       setAccuracy(accuracy2);
