@@ -33,7 +33,7 @@
 }
 
 .bg-dark {
-  background-color: rgb(35, 38, 41) !important;
+  background-color: rgb(48, 123, 199) !important;
 }
 
 .container-fluid,
@@ -499,7 +499,7 @@
 }
 
 .mono {
-  font-family: "Cutive Mono", "Courier New", monospace;
+  font-family: "Roboto", "Courier New", monospace;
 }
 .quotes {
   background-color: #222;
