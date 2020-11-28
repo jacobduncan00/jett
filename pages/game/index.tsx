@@ -9,7 +9,7 @@ let interval = null;
 
 function Game() {
   const inputRef = useRef(null);
-  let outputRef = useRef(null);
+  const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
   const [input, setInput] = useState("");
@@ -18,7 +18,7 @@ function Game() {
   const [correctIndex, setCorrectIndex] = useState(0);
   const [isError, setIsError] = useState(false);
   const [errorIndex, setErrorIndex] = useState(0);
-  const [prevCorrectIndex, setPrevCorrectIndex] = useState(1);
+  const [numOfErrors, setNumOfErrors] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [cpm, setCpm] = useState(0);
@@ -66,7 +66,7 @@ function Game() {
     const { key } = event; // Get the key that the user pressed from the event object
     const corpusText = corpus;
 
-    if (key === corpusText.charAt(index)) {
+    if (key == corpusText.charAt(index)) {
       setIndex(index + 1); // Only increment the index to check if the user typed the correct key
       const currentCharacter = corpusText.substring(
         index + 1,
@@ -75,27 +75,76 @@ function Game() {
       setInput(currentCharacter);
       setCorrectIndex(correctIndex + 1);
       setIsError(false);
+      setNumOfErrors(0);
       outputRef.current.innerHTML += key;
     } else {
-      if (allowedKeys.includes(key)) {
-        setErrorIndex(errorIndex + 1);
-        setIsError(true);
-      }
+      setErrorIndex(errorIndex + 1);
+      setIsError(true);
+      setNumOfErrors(numOfErrors + 1);
     }
 
-    const timeRemaining = parseFloat(((60 - duration) / 60).toFixed(2));
-    const accuracy2 = Math.floor((index - errorIndex) / (index * 100));
-    const WPM2 = (Math.round(correctIndex / 1 / timeRemaining)); // Its because here we are calculating in terms of 1 second interval, we need to do milliseconds
+    const timeRemains: any = ((60 - duration) / 60).toFixed(2);
+    const tR = 0.5 - timeRemains;
+    const _acc = Math.floor((index - errorIndex) / index * 1000);
+    const _wpm = Math.round(((correctIndex / 5) - numOfErrors) / Math.abs(tR) + 0.000001);
+    console.log(_wpm);
 
-    if (index > 1) {
-      setAccuracy(accuracy2);
+    if (index > 5) {
+      setAccuracy(_acc);
       setCpm(correctIndex);
-      setWpm(WPM2);
+      if (_wpm < 0) {
+        setWpm(0);
+      } else {
+        setWpm(_wpm);
+      }
     }
     if (index + 1 === corpusText.length || errorIndex > 50) {
       handleEnd();
     }
-  };
+  }
+
+  // const handleTyping = (event: any) => {
+  //   event.preventDefault();
+  //   const { key } = event; // Get the key that the user pressed from the event object
+  //   const corpusText = corpus;
+
+  //   setInterval(() => {
+  //     setWpm(wpm);
+  //   }, 1000);
+
+  //   if (key === corpusText.charAt(index)) {
+  //     setIndex(index + 1); // Only increment the index to check if the user typed the correct key
+  //     const currentCharacter = corpusText.substring(
+  //       index + 1,
+  //       index + corpusText.length
+  //     );
+  //     setInput(currentCharacter);
+  //     setCorrectIndex(correctIndex + 1);
+  //     setIsError(false);
+  //     outputRef.current.innerHTML += key;
+  //   } else {
+  //     if (allowedKeys.includes(key)) {
+  //       setErrorIndex(errorIndex + 1);
+  //       setNumOfErrors(numOfErrors + 1);
+  //       setIsError(true);
+  //     }
+  //   }
+
+  //   const timeRemaining = parseFloat(((60 - duration) / 60).toFixed(2));
+  //   const accuracy2 = Math.floor((index - errorIndex) / (index * 100));
+  //   const WPM3 = Math.round(((correctIndex / 1) - (numOfErrors * 2)) / 0.5);
+  //   const WPM2 = (Math.round(correctIndex / 1 / timeRemaining)); // Its because here we are calculating in terms of 1 second interval, we need to do milliseconds
+
+  //   if (index > 1) {
+  //     setAccuracy(accuracy2);
+  //     setCpm(correctIndex);
+  //     setWpm(WPM3);
+  //   }
+  //   if (index + 1 === corpusText.length || errorIndex > 50) {
+  //     handleEnd();
+  //     setWpm(WPM3);
+  //   }
+  // };
 
   useEffect(() => {
     if (ended) {
@@ -120,17 +169,7 @@ function Game() {
               name="WPM"
               data={wpm}
               style={
-                wpm > 0 && wpm < 20
-                  ? { color: "white", backgroundcolor: "#eb4841" }
-                  : wpm >= 20 && wpm < 40
-                    ? { color: "white", backgroundcolor: "#f48847" }
-                    : wpm >= 40 && wpm < 60
-                      ? { color: "white", backgroundcolor: "#ffc84a" }
-                      : wpm >= 60 && wpm < 80
-                        ? { color: "white", backgroundcolor: "#a6c34c" }
-                        : wpm >= 80
-                          ? { color: "white", backgroundcolor: "#4ec04e" }
-                          : {}
+                { color: "white", backgroundcolor: "white" }
               }
             />
             <GameStats name="Timer" data={duration} style={""} />
@@ -198,10 +237,6 @@ function Game() {
             />
           </div>
         </div>
-        {/* <div className={styles.container}>
-            <Timer />
-            <GameCard />
-          </div> */}
       </div>
     </div>
   );
