@@ -1,3 +1,5 @@
+@import url("https://dev-cats.github.io/code-snippets/JetBrainsMono.css");
+
 .body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
@@ -33,7 +35,22 @@
 }
 
 .bg-dark {
-  background-color: rgb(48, 123, 199) !important;
+  /* background-color: rgb(48, 123, 199) !important; */
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  font-family: "JetBrains Mono";
+}
+
+.green {
+  color: rgb(107, 221, 107);
+}
+
+.bg-dark-complete {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  text-align: center;
 }
 
 .container-fluid,
@@ -46,6 +63,11 @@
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.center {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .row {
@@ -499,7 +521,7 @@
 }
 
 .mono {
-  font-family: "Roboto", "Courier New", monospace;
+  font-family: "JetBrains Mono";
 }
 .quotes {
   background-color: #222;

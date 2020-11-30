@@ -103,49 +103,6 @@ function Game() {
     }
   }
 
-  // const handleTyping = (event: any) => {
-  //   event.preventDefault();
-  //   const { key } = event; // Get the key that the user pressed from the event object
-  //   const corpusText = corpus;
-
-  //   setInterval(() => {
-  //     setWpm(wpm);
-  //   }, 1000);
-
-  //   if (key === corpusText.charAt(index)) {
-  //     setIndex(index + 1); // Only increment the index to check if the user typed the correct key
-  //     const currentCharacter = corpusText.substring(
-  //       index + 1,
-  //       index + corpusText.length
-  //     );
-  //     setInput(currentCharacter);
-  //     setCorrectIndex(correctIndex + 1);
-  //     setIsError(false);
-  //     outputRef.current.innerHTML += key;
-  //   } else {
-  //     if (allowedKeys.includes(key)) {
-  //       setErrorIndex(errorIndex + 1);
-  //       setNumOfErrors(numOfErrors + 1);
-  //       setIsError(true);
-  //     }
-  //   }
-
-  //   const timeRemaining = parseFloat(((60 - duration) / 60).toFixed(2));
-  //   const accuracy2 = Math.floor((index - errorIndex) / (index * 100));
-  //   const WPM3 = Math.round(((correctIndex / 1) - (numOfErrors * 2)) / 0.5);
-  //   const WPM2 = (Math.round(correctIndex / 1 / timeRemaining)); // Its because here we are calculating in terms of 1 second interval, we need to do milliseconds
-
-  //   if (index > 1) {
-  //     setAccuracy(accuracy2);
-  //     setCpm(correctIndex);
-  //     setWpm(WPM3);
-  //   }
-  //   if (index + 1 === corpusText.length || errorIndex > 50) {
-  //     handleEnd();
-  //     setWpm(WPM3);
-  //   }
-  // };
-
   useEffect(() => {
     if (ended) {
       const wp = wpm.toString();
@@ -165,20 +122,16 @@ function Game() {
       <div className={styles.row}>
         <div className="col-sm-6 col-md-2 order-md-0 px-5">
           <ul className="list-unstyled text-center small">
-            <GameStats
-              name="WPM"
-              data={wpm}
-              style={
-                { color: "white", backgroundcolor: "white" }
-              }
-            />
             <GameStats name="Timer" data={duration} style={""} />
+            <GameStats style={""} name="Errors" data={errorIndex} />
+            <GameStats style={""} name="Acuracy" data={`${Math.round(accuracy * .10)}%`} />
           </ul>
         </div>
         <div className="col-sm-12 col-md-8 order-md-1">
           <div className="container">
             <div className="text-center mt-4 header">
               <div className="control my-5">
+
                 {ended ? (
                   <button
                     className="btn btn-outline-danger btn-circle"
@@ -207,8 +160,10 @@ function Game() {
 
             {/* If the player finished the game either by the timer or by entering all the letters */}
             {ended ? (
-              <div className="bg-dark text-light p-4 mt-5 lead rounded">
-                <span>Congratulations you got a score of {wpm} WPM!</span>
+              <div className="bg-dark-complete mono p-4 mt-5 lead rounded">
+                <h1>
+                  <span>Congratulations you got a score of <span className="green">{wpm}</span> WPM!</span>
+                </h1>
               </div>
             ) : started ? (
               <div
@@ -221,7 +176,6 @@ function Game() {
                 {input}
               </div>
             ) : (
-                  // This is the textbox where the quote comes up
                   <div
                     className="bg-dark mono quotes text-muted"
                     tabIndex={-1}
@@ -232,7 +186,7 @@ function Game() {
                 )}
 
             <div
-              className="p-4 mt-4 bg-dark text-light rounded lead"
+              className="p-4 mt-4 bg-dark rounded lead"
               ref={outputRef}
             />
           </div>
