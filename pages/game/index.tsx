@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import allowedKeys from "../../components/keys";
-import Timer from "../../components/timer";
-import GameCard from "../../components/game-card";
 import styles from "../../styles/Home.module.css";
 import GameStats from "../../components/game-stats";
+import EntryModal from "../../components/entry-modal";
 
 let interval = null;
 
@@ -21,9 +19,9 @@ function Game() {
   const [numOfErrors, setNumOfErrors] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [wpm, setWpm] = useState(0);
-  const [cpm, setCpm] = useState(0);
-  const [lastScore, setLastScore] = useState("0");
   const [corpus, setCorpus] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +32,14 @@ function Game() {
     };
     fetchData();
   }, []);
+
+  const handleClose = () => {
+    setShowModal(false);
+  }
+
+  const renderModal = () => {
+    setShowModal(true);
+  }
 
   const handleStart = () => {
     setStarted(true);
@@ -87,11 +93,10 @@ function Game() {
     const tR = 0.5 - timeRemains;
     const _acc = Math.floor((index - errorIndex) / index * 1000);
     const _wpm = Math.round(((correctIndex / 5) - numOfErrors) / Math.abs(tR) + 0.000001);
-    console.log(_wpm);
 
     if (index > 5) {
       setAccuracy(_acc);
-      setCpm(correctIndex);
+      // setCpm(correctIndex);
       if (_wpm < 0) {
         setWpm(0);
       } else {
@@ -102,20 +107,6 @@ function Game() {
       handleEnd();
     }
   }
-
-  useEffect(() => {
-    if (ended) {
-      const wp = wpm.toString();
-      localStorage.setItem("wpm", String(wpm));
-    }
-  }, [ended, wpm]);
-
-  useEffect(() => {
-    const storedScore = localStorage.getItem("wpm");
-    if (storedScore) {
-      setLastScore(storedScore);
-    }
-  });
 
   return (
     <div className={styles.game}>
@@ -158,13 +149,15 @@ function Game() {
               </div>
             </div>
 
-            {/* If the player finished the game either by the timer or by entering all the letters */}
             {ended ? (
               <div className="bg-dark-complete mono p-4 mt-5 lead rounded">
                 <h1>
                   <span>Congratulations you got a score of <span className="green">{wpm}</span> WPM!</span>
                 </h1>
-              </div>
+                {/* This button needs styling */}
+                <button className="modalButton" onClick={() => renderModal()}>Add to Leaderboard</button>
+                {showModal ? ( <EntryModal showModal={showModal} headerText="Add To Leaderboard" handleClose={handleClose} />) : <div></div>}
+             </div>
             ) : started ? (
               <div
                 className={`text-light mono quotes${started ? " active" : ""}${isError ? " is-error" : ""

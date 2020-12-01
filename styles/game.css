@@ -604,3 +604,22 @@
     background: #fff;
   }
 }
+
+.modalButton {
+  font-family: "JetBrains Mono";
+  background-color: #4CAF50;
+  border: none;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.modalButton:hover {
+  color: #4CAF50;
+  background-color: black;
+}
