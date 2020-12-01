@@ -22,7 +22,6 @@ function Game() {
   const [corpus, setCorpus] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-
   useEffect(() => {
     const fetchData = async () => {
       const url = "http://api.quotable.io/random"; // We need to make our own api with our backend to generate this for us
@@ -35,11 +34,11 @@ function Game() {
 
   const handleClose = () => {
     setShowModal(false);
-  }
+  };
 
   const renderModal = () => {
     setShowModal(true);
-  }
+  };
 
   const handleStart = () => {
     setStarted(true);
@@ -91,8 +90,10 @@ function Game() {
 
     const timeRemains: any = ((60 - duration) / 60).toFixed(2);
     const tR = 0.5 - timeRemains;
-    const _acc = Math.floor((index - errorIndex) / index * 1000);
-    const _wpm = Math.round(((correctIndex / 5) - numOfErrors) / Math.abs(tR) + 0.000001);
+    const _acc = Math.floor(((index - errorIndex) / index) * 1000);
+    const _wpm = Math.round(
+      (correctIndex / 5 - numOfErrors) / Math.abs(tR) + 0.000001
+    );
 
     if (index > 5) {
       setAccuracy(_acc);
@@ -106,7 +107,7 @@ function Game() {
     if (index + 1 === corpusText.length || errorIndex > 50) {
       handleEnd();
     }
-  }
+  };
 
   return (
     <div className={styles.game}>
@@ -115,14 +116,17 @@ function Game() {
           <ul className="list-unstyled text-center small">
             <GameStats name="Timer" data={duration} style={""} />
             <GameStats style={""} name="Errors" data={errorIndex} />
-            <GameStats style={""} name="Acuracy" data={`${Math.round(accuracy * .10)}%`} />
+            <GameStats
+              style={""}
+              name="Acuracy"
+              data={`${Math.round(accuracy * 0.1)}%`}
+            />
           </ul>
         </div>
         <div className="col-sm-12 col-md-8 order-md-1">
           <div className="container">
             <div className="text-center mt-4 header">
               <div className="control my-5">
-
                 {ended ? (
                   <button
                     className="btn btn-outline-danger btn-circle"
@@ -138,13 +142,13 @@ function Game() {
                     Hurry
                   </button>
                 ) : (
-                      <button
-                        className="btn btn-circle btn-outline-success"
-                        onClick={handleStart}
-                      >
-                        GO!
-                      </button>
-                    )}
+                  <button
+                    className="btn btn-circle btn-outline-success"
+                    onClick={handleStart}
+                  >
+                    GO!
+                  </button>
+                )}
                 <span className="btn-circle-animation" />
               </div>
             </div>
@@ -152,16 +156,33 @@ function Game() {
             {ended ? (
               <div className="bg-dark-complete mono p-4 mt-5 lead rounded">
                 <h1>
-                  <span>Congratulations you got a score of <span className="green">{wpm}</span> WPM!</span>
+                  <span>
+                    Congratulations you got a score of{" "}
+                    <span className="green">{wpm}</span> WPM!
+                  </span>
                 </h1>
                 {/* This button needs styling */}
-                <button className="modalButton" onClick={() => renderModal()}>Add to Leaderboard</button>
-                {showModal ? ( <EntryModal showModal={showModal} headerText="Add To Leaderboard" handleClose={handleClose} />) : <div></div>}
-             </div>
+                <button className="modalButton" onClick={() => renderModal()}>
+                  Add to Leaderboard
+                </button>
+                {showModal ? (
+                  <EntryModal
+                    showModal={showModal}
+                    headerText="Add To Leaderboard"
+                    wpm={wpm.toString()}
+                    errors={errorIndex}
+                    accuracy={`${Math.round(accuracy * 0.1)}%`}
+                    handleClose={handleClose}
+                  />
+                ) : (
+                  <div></div>
+                )}
+              </div>
             ) : started ? (
               <div
-                className={`text-light mono quotes${started ? " active" : ""}${isError ? " is-error" : ""
-                  }`}
+                className={`text-light mono quotes${started ? " active" : ""}${
+                  isError ? " is-error" : ""
+                }`}
                 tabIndex={0}
                 onKeyDown={handleTyping}
                 ref={inputRef}
@@ -169,19 +190,16 @@ function Game() {
                 {input}
               </div>
             ) : (
-                  <div
-                    className="bg-dark mono quotes text-muted"
-                    tabIndex={-1}
-                    ref={inputRef}
-                  >
-                    {input}
-                  </div>
-                )}
+              <div
+                className="bg-dark mono quotes text-muted"
+                tabIndex={-1}
+                ref={inputRef}
+              >
+                {input}
+              </div>
+            )}
 
-            <div
-              className="p-4 mt-4 bg-dark rounded lead"
-              ref={outputRef}
-            />
+            <div className="p-4 mt-4 bg-dark rounded lead" ref={outputRef} />
           </div>
         </div>
       </div>
