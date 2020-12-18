@@ -7,7 +7,6 @@ const LargeCard = () => {
     <div>
       <div className={styles.settings_container}>
         <h3 className={styles.settings_title}>Time</h3>
-        <hr className={styles.settings_hr} />
         <div className={styles.settings_buttontimeselector}>
           <Active
             elements={[
@@ -19,7 +18,6 @@ const LargeCard = () => {
           />
         </div>
         <h3 className={styles.settings_title}>Words</h3>
-        <hr className={styles.settings_hr} />
         <div className={styles.settings_buttontimeselector}>
           <Active
             elements={[
@@ -30,15 +28,7 @@ const LargeCard = () => {
             ]}
           />
         </div>
-        {/* <h3 className={styles.settings_title}>Dark Theme</h3>
-        <hr className={styles.settings_hr} />
-        <div className={styles.settings_buttontimeselector}>
-          <Active elements={[{ name: "On" }, { name: "Off" }]} />
-        </div> */}
       </div>
-      <footer className={styles.footer}>
-        Copyright &copy; 2020, Jacob Duncan
-      </footer>
     </div>
   );
 };

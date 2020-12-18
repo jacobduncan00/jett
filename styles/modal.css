@@ -10,8 +10,8 @@
   .modal-main {
     position: fixed;
     background: white;
-    width: 30%;
-    height: 30%;
+    width: fit-content;
+    height: fit-content;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -28,8 +28,19 @@
     display: none;
   }
 
+  .modal-header {
+    margin-top: 0px;
+  }
+
+  .modal-hr {
+    margin-bottom: 50px;
+    margin-top: 0px;
+  }
+
   .modalLabel {
     margin-right: 5px;
+    display: block;
+    margin-bottom: 10px;
   }
 
   .modalInput {

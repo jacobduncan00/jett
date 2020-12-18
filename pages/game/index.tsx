@@ -5,7 +5,7 @@ import EntryModal from "../../components/entry-modal";
 
 let interval = null;
 
-function Game() {
+function Game({ quote }) {
   const inputRef = useRef(null);
   const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
@@ -23,14 +23,8 @@ function Game() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://api.quotable.io/random"; // We need to make our own api with our backend to generate this for us
-      const response = await fetch(url);
-      const data = await response.json();
-      setCorpus(data.content);
-    };
-    fetchData();
-  }, []);
+      setCorpus(quote.content);
+  });
 
   const handleClose = () => {
     setShowModal(false);
@@ -82,6 +76,8 @@ function Game() {
       setIsError(false);
       setNumOfErrors(0);
       outputRef.current.innerHTML += key;
+    } else if(event.shiftKey) {
+
     } else {
       setErrorIndex(errorIndex + 1);
       setIsError(true);
@@ -205,6 +201,22 @@ function Game() {
       </div>
     </div>
   );
+}
+
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch('http://api.quotable.io/random')
+  const quote = await res.json()
+
+  // By returning { props: posts }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      quote,
+    },
+  }
 }
 
 export default Game;

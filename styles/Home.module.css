@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
-
 .container {
   min-height: 50vh;
   padding: 0 0.5rem;
@@ -310,15 +308,16 @@
 }
 
 .settings_container {
+  padding-left: 25px;
+  padding-right: 25px;
   border: 2px solid black;
   border-radius: 10px;
-  margin: 10px;
-  width: 15%;
+  margin: 0;
   position: absolute;
-  z-index: 15;
-  top: 40%;
+  top: 50%;
   left: 50%;
-  margin: -100px 0 0 -150px;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 /* 
 #settings_containeroutput {

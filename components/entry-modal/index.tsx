@@ -13,7 +13,6 @@ type Props = {
 
 // Get information from game and from input and send to the server to be stored
 // in the leaderboard database
-
 function EntryModal({
   showModal,
   headerText,
@@ -32,7 +31,7 @@ function EntryModal({
   };
 
   const sendToDb = () => {
-    console.log(name, wpm, errors, accuracy);
+    // console.log(name, wpm, errors, accuracy);
     axios.post("http://localhost:5500/leaderboard/insert", {
       userName: name,
       wpm: wpm,
@@ -46,8 +45,9 @@ function EntryModal({
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
-        <h1>{headerText}</h1>
-        <label className="modalLabel">Name</label>
+        <h1 className="modal-header">{headerText}</h1>
+        <hr className="modal-hr" />
+        <label className="modalLabel">enter name</label>
         <input
           type="text"
           className="modalInput"
