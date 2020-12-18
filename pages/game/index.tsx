@@ -221,7 +221,7 @@ function Game({ quote }) {
 export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
-  const res = await fetch('http://api.quotable.io/random')
+  const res = await fetch('https://api.quotable.io/random')
   const quote = await res.json()
 
   // By returning { props: posts }, the Blog component
