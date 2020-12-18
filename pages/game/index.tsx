@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "../../styles/Home.module.css";
 import GameStats from "../../components/game-stats";
 import EntryModal from "../../components/entry-modal";
+import { FaChevronLeft } from "react-icons/fa";
+import Link from "next/link";
+
 
 let interval = null;
 
@@ -106,6 +109,16 @@ function Game({ quote }) {
   };
 
   return (
+    <div>
+      <div className={styles.setting_headercontainer}>
+      <Link href="/">
+        <div className={styles.wrapperDiv}>
+          <a className={styles.chevronLink} href="/" >
+            <FaChevronLeft size={32} />
+          </a>
+        </div>
+        </Link>
+    </div >
     <div className={styles.game}>
       <div className={styles.row}>
         <div className="col-sm-6 col-md-2 order-md-0 px-5">
@@ -125,24 +138,24 @@ function Game({ quote }) {
               <div className="control my-5">
                 {ended ? (
                   <button
-                    className="btn btn-outline-danger btn-circle"
+                    className="btn btn-outline-danger"
                     onClick={() => window.location.reload()}
                   >
                     Reload
                   </button>
                 ) : started ? (
                   <button
-                    className="btn btn-circle btn-outline-success"
+                    className="btn btn-outline-success"
                     disabled
                   >
-                    Hurry
+                    Type!
                   </button>
                 ) : (
                   <button
-                    className="btn btn-circle btn-outline-success"
+                    className="btn btn-outline-success"
                     onClick={handleStart}
                   >
-                    GO!
+                    Click here to start!
                   </button>
                 )}
                 <span className="btn-circle-animation" />
@@ -171,7 +184,7 @@ function Game({ quote }) {
                     handleClose={handleClose}
                   />
                 ) : (
-                  <div></div>
+                  <div>Hi2</div>
                 )}
               </div>
             ) : started ? (
@@ -199,6 +212,7 @@ function Game({ quote }) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

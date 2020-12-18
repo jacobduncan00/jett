@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Adding types to the prop passed in from the game
@@ -21,15 +21,24 @@ function EntryModal({
   accuracy,
   handleClose,
 }: Props) {
-  const showHideClassName = showModal
+  const [modalStatus, setModalStatus] = useState("");
+  const [on, setOn] = useState(false);
+  let showHideClassName;
+
+  useEffect(() => {
+    showHideClassName = showModal
     ? "modal display-block"
     : "modal display-none";
+    setModalStatus(showHideClassName);
+    setOn(true);
+  });
   const [name, setName] = useState("");
 
   const handleTyping = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
   };
 
+  // This will need to be changed to a context function 
   const sendToDb = () => {
     // console.log(name, wpm, errors, accuracy);
     axios.post("http://localhost:5500/leaderboard/insert", {
@@ -43,8 +52,15 @@ function EntryModal({
   };
 
   return (
-    <div className={showHideClassName}>
+    on ? 
+    <div className={modalStatus}>
       <section className="modal-main">
+        <button className="top-right" onClick={() => {
+          setModalStatus("modal display-none");
+          setOn(false);
+          showHideClassName = "modal display-none";
+          }
+        }>X</button>
         <h1 className="modal-header">{headerText}</h1>
         <hr className="modal-hr" />
         <label className="modalLabel">enter name</label>
@@ -68,6 +84,7 @@ function EntryModal({
         </div>
       </section>
     </div>
+    : <div>Hi</div>
   );
 }
 

@@ -43,6 +43,23 @@
     margin-bottom: 10px;
   }
 
+  .top-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    border: none;
+    background: none;
+    padding-top: 5px;
+    padding-right: 10px;
+    cursor: pointer;
+    outline:0;
+  }
+
+  .top-right:focus {
+    outline:0;
+  }
+
   .modalInput {
     text-align: center;
     padding: 12px 20px;
