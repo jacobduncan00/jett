@@ -184,7 +184,7 @@ function Game({ quote }) {
                     handleClose={handleClose}
                   />
                 ) : (
-                  <div>Hi2</div>
+                  <div</div>
                 )}
               </div>
             ) : started ? (
