@@ -56,6 +56,7 @@ function EntryModal({
     <div className={modalStatus}>
       <section className="modal-main">
         <button className="top-right" onClick={() => {
+          handleClose();
           setModalStatus("modal display-none");
           setOn(false);
           showHideClassName = "modal display-none";
@@ -75,7 +76,6 @@ function EntryModal({
           <button
             className="modalButton"
             onClick={() => {
-              handleClose();
               sendToDb();
             }}
           >

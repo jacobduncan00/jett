@@ -9,7 +9,7 @@ import Link from "next/link";
 let interval = null;
 
 function Game({ quote }) {
-  const inputRef = useRef(null);
+  let inputRef = useRef(null);
   const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
@@ -31,6 +31,9 @@ function Game({ quote }) {
 
   const handleClose = () => {
     setShowModal(false);
+    setStarted(false);
+    setEnded(false);
+    setInput("");
   };
 
   const renderModal = () => {
@@ -184,7 +187,7 @@ function Game({ quote }) {
                     handleClose={handleClose}
                   />
                 ) : (
-                  <div</div>
+                  <div></div>
                 )}
               </div>
             ) : started ? (
