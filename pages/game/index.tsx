@@ -5,11 +5,9 @@ import EntryModal from "../../components/entry-modal";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
 
-
 let interval = null;
-
 function Game({ quote }) {
-  let inputRef = useRef(null);
+  const inputRef = useRef(null);
   const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
@@ -26,13 +24,18 @@ function Game({ quote }) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    const fetchQuote = async() => {
+      const res = await fetch('https://api.quotable.io/random');
+      const quote = await res.json();
       setCorpus(quote.content);
-  });
+    }
+    fetchQuote();
+  }, []);
 
   const handleClose = () => {
     setShowModal(false);
     setStarted(false);
-    setEnded(false);
+    setEnded(true);
     setInput("");
   };
 
@@ -83,13 +86,14 @@ function Game({ quote }) {
       setNumOfErrors(0);
       outputRef.current.innerHTML += key;
     } else if(event.shiftKey) {
-
+      // if user presses Shift key, don't do anything cuz its not an error and its not correct always
     } else {
       setErrorIndex(errorIndex + 1);
       setIsError(true);
       setNumOfErrors(numOfErrors + 1);
     }
 
+    // WPM Algorithm
     const timeRemains: any = ((60 - duration) / 60).toFixed(2);
     const tR = 0.5 - timeRemains;
     const _acc = Math.floor(((index - errorIndex) / index) * 1000);
@@ -99,7 +103,6 @@ function Game({ quote }) {
 
     if (index > 5) {
       setAccuracy(_acc);
-      // setCpm(correctIndex);
       if (_wpm < 0) {
         setWpm(0);
       } else {
@@ -222,17 +225,12 @@ function Game({ quote }) {
 
 
 export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
   const res = await fetch('https://api.quotable.io/random')
   const quote = await res.json()
-
-  // By returning { props: posts }, the Blog component
-  // will receive `posts` as a prop at build time
   return {
     props: {
-      quote,
-    },
+      quote
+    }
   }
 }
 
