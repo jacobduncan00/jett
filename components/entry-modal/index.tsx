@@ -38,9 +38,7 @@ function EntryModal({
     setName(e.currentTarget.value);
   };
 
-  // This will need to be changed to a context function 
   const sendToDb = () => {
-    // console.log(name, wpm, errors, accuracy);
     axios.post("http://localhost:5500/leaderboard/insert", {
       userName: name,
       wpm: wpm,

@@ -4,9 +4,10 @@ import GameStats from "../../components/game-stats";
 import EntryModal from "../../components/entry-modal";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
+import axios from "axios";
 
 let interval = null;
-function Game({ quote }) {
+function Game() {
   const inputRef = useRef(null);
   const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
@@ -23,13 +24,15 @@ function Game({ quote }) {
   const [corpus, setCorpus] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+
   useEffect(() => {
-    const fetchQuote = async() => {
-      const res = await fetch('https://api.quotable.io/random');
-      const quote = await res.json();
-      setCorpus(quote.content);
-    }
-    fetchQuote();
+    // Hit the backend for the corpus in which the user will type
+    const res = axios.post("http://localhost:5500/sentences", {
+      numSentences: 3
+    });
+    res.then((data) => {
+      setCorpus(data.data.content);
+    });
   }, []);
 
   const handleClose = () => {
@@ -221,17 +224,6 @@ function Game({ quote }) {
     </div>
     </div>
   );
-}
-
-
-export async function getStaticProps() {
-  const res = await fetch('https://api.quotable.io/random')
-  const quote = await res.json()
-  return {
-    props: {
-      quote
-    }
-  }
 }
 
 export default Game;
