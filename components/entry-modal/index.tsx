@@ -39,7 +39,8 @@ function EntryModal({
   };
 
   const sendToDb = () => {
-    axios.post("http://localhost:5500/leaderboard/insert", {
+    // http://localhost:5500/leaderboard/insert
+    axios.post("/api/insert", {
       userName: name,
       wpm: wpm,
       numberOfErrors: errors,

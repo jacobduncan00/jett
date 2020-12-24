@@ -27,8 +27,8 @@ function Game() {
 
   useEffect(() => {
     // Hit the backend for the corpus in which the user will type
-    const res = axios.post("http://localhost:5500/sentences", {
-      numSentences: 3
+    const res = axios.post("/api/sentences", {
+      numSentences: 1
     });
     res.then((data) => {
       setCorpus(data.data.content);

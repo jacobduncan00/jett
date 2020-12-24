@@ -17,14 +17,15 @@ const LargeCard = () => {
             ]}
           />
         </div>
-        <h3 className={styles.settings_title}>Words</h3>
+        <h3 className={styles.settings_title}>Sentences</h3>
         <div className={styles.settings_buttontimeselector}>
           <Active
             elements={[
-              { name: "10" },
-              { name: "25" },
-              { name: "50" },
-              { name: "100" },
+              { name: "02" },
+              { name: "04" },
+              { name: "06" },
+              { name: "08" },
+              { name: "10" }
             ]}
           />
         </div>

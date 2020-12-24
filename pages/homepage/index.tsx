@@ -8,7 +8,7 @@ const homepage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Jett - typing game designed to improve programming</title>
+        <title>Jett</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -16,7 +16,7 @@ const homepage = () => {
         <h1 className={styles.title}>Jett</h1>
 
         <p className={styles.description}>
-          The typing game designed to improve programming
+          A typing game to help you type better
         </p>
 
         {/* Links to the GitHub repository where the code for this project is located*/}
