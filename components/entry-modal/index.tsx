@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 // Adding types to the prop passed in from the game
 type Props = {
   showModal: boolean;
   headerText: string;
-  wpm: string;
-  errors: Number;
-  accuracy: string;
   handleClose: () => void;
+  sendToDb: (name: string) => void;
 };
 
 // Get information from game and from input and send to the server to be stored
@@ -16,10 +13,8 @@ type Props = {
 function EntryModal({
   showModal,
   headerText,
-  wpm,
-  errors,
-  accuracy,
   handleClose,
+  sendToDb,
 }: Props) {
   const [modalStatus, setModalStatus] = useState("");
   const [on, setOn] = useState(false);
@@ -38,17 +33,12 @@ function EntryModal({
     setName(e.currentTarget.value);
   };
 
-  const sendToDb = () => {
-    // http://localhost:5500/leaderboard/insert
-    axios.post("/api/insert", {
-      userName: name,
-      wpm: wpm,
-      numberOfErrors: errors,
-      accuracy: accuracy,
-    });
+  const clickedSendToDB = () => {
+    console.log("called clickedSendToDB() from entry-modal");
     setName("");
-    showModal = false; // This is probably a very bad thing to do
-  };
+    showModal = false;
+  }
+
 
   return (
     on ? 
@@ -75,7 +65,8 @@ function EntryModal({
           <button
             className="modalButton"
             onClick={() => {
-              sendToDb();
+              sendToDb(name);
+              clickedSendToDB();
             }}
           >
             Submit

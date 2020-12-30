@@ -4,7 +4,8 @@ import GameStats from "../../components/game-stats";
 import EntryModal from "../../components/entry-modal";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { AxiosResponse } from "axios";
 
 let interval = null;
 function Game() {
@@ -24,6 +25,23 @@ function Game() {
   const [corpus, setCorpus] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const sendToDb = (name: string) => {
+    console.log("called sendToDb from game");
+    axios.post("/api/insert", {
+      userName: name,
+      wpm: wpm,
+      numberOfErrors: errorIndex,
+      accuracy: Math.round(accuracy * 0.1),
+    }).then((data: AxiosResponse) => {
+      if (data.data === "Success") {
+        alert(`${name} with a score of ${wpm} added to the leaderboard!`)
+      }
+    }).catch((response: AxiosError) => {
+      if (response.response!.status === 409) {
+        alert("Username already in the leaderboards, please pick another one!")
+      } 
+    });
+  };
 
   useEffect(() => {
     // Hit the backend for the corpus in which the user will type
@@ -34,6 +52,8 @@ function Game() {
       setCorpus(data.data.content);
     });
   }, []);
+
+
 
   const handleClose = () => {
     setShowModal(false);
@@ -187,10 +207,8 @@ function Game() {
                   <EntryModal
                     showModal={showModal}
                     headerText="Add To Leaderboard"
-                    wpm={wpm.toString()}
-                    errors={errorIndex}
-                    accuracy={`${Math.round(accuracy * 0.1)}%`}
                     handleClose={handleClose}
+                    sendToDb={sendToDb}
                   />
                 ) : (
                   <div></div>
