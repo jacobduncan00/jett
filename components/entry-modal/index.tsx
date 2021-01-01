@@ -34,7 +34,7 @@ function EntryModal({
   };
 
   const clickedSendToDB = () => {
-    console.log("called clickedSendToDB() from entry-modal");
+    // console.log("called clickedSendToDB() from entry-modal");
     setName("");
     showModal = false;
   }

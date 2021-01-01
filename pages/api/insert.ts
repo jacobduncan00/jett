@@ -1,7 +1,4 @@
-import * as dotenv from "dotenv"
 import { Client } from "pg"
-
-dotenv.config({ path: "~/src/jett/.env.local" })
 
 export default function handler(request: any, response: any) {
   const client = new Client({
@@ -10,6 +7,7 @@ export default function handler(request: any, response: any) {
       rejectUnauthorized: false
     }
   });
+
 
   client.connect();
 

@@ -4,8 +4,7 @@ import GameStats from "../../components/game-stats";
 import EntryModal from "../../components/entry-modal";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
-import axios, { AxiosError } from "axios";
-import { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 let interval = null;
 function Game() {
@@ -39,6 +38,7 @@ function Game() {
     }).catch((response: AxiosError) => {
       if (response.response!.status === 409) {
         alert("Username already in the leaderboards, please pick another one!")
+        handleClose()
       } 
     });
   };
