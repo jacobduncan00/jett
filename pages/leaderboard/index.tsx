@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import leaderboardcard from "../../components/leaderboard-card"
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const leaderboard = () => {
@@ -22,29 +21,13 @@ const leaderboard = () => {
         console.log("HERE")
 
         setShowLeaderboard(true)
-
-        
-
     }, []);
 
-    const runCards = () => {
-        console.log(1)
-        leaderboardObj.map((card) => {
-            console.log(card)
-        return(
-            <h1>HI</h1>
-        )
-        })
-    }
-        return(
-            <div>
-                {leaderboardObj.map((card) => {
-                    <p>HI</p>
-                })}
-            </div>
-        )
-    
-
+    return(
+        <div>{leaderboardObj.map((person) => {
+            <p>{person.username}</p>
+        })}</div>
+    )
 }
 
 export default leaderboard;
