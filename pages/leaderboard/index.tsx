@@ -1,33 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const leaderboard = () => {
 
     const [leaderboardObj, setLeaderboardObj] = useState([]);
-    const [showLeaderboard, setShowLeaderboard] = useState(true);
-
     useEffect(() => {
-        console.log("Called useEffect() from leaderboard page")
-        axios.get("/api/leaderboard")
-        .then((data: AxiosResponse) => {
-            console.log("DATA", data.data)
-            setLeaderboardObj(data.data)
-        }).catch((response: AxiosError) => {
-            if(response.response!.status === 409) {
-                console.log("GOT A 409")
-            }
-        });
+      async function fetchData() {
+        try {
+          const response = await fetch("/api/leaderboard");
+          const setter = await response.json();
+          setLeaderboardObj([...setter]);
+        } catch(e) {
+          console.log(e);
+        }
+      };
+      fetchData();
+    }, [leaderboardObj]);
 
-        console.log("HERE")
-
-        setShowLeaderboard(true)
-    }, []);
 
     return(
-        <div>{leaderboardObj.map((person) => {
-            <p>{person.username}</p>
-        })}</div>
+      <div>{leaderboardObj.map((person) => {
+        <h1>{person.username}</h1>
+      })}</div>
     )
+
 }
 
 export default leaderboard;
