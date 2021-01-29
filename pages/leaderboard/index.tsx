@@ -1,27 +1,26 @@
 import { useEffect, useState, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { LeaderboardEntry } from "../../Types/LeaderBoardEntry";
 
 const leaderboard = () => {
-
-    const [leaderboardObj, setLeaderboardObj] = useState([]);
+    const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
     useEffect(() => {
       async function fetchData() {
         try {
-          const response = await fetch("/api/leaderboard");
-          const setter = await response.json();
-          setLeaderboardObj([...setter]);
+          const response = await axios.get("/api/leaderboard");
+          setLeaderboardEntries(response.data);
         } catch(e) {
           console.log(e);
         }
       };
       fetchData();
-    }, [leaderboardObj]);
+    }, []);
 
 
     return(
-      <div>{leaderboardObj.map((person) => {
-        <h1>{person.username}</h1>
-      })}</div>
+      <div>{leaderboardEntries.map((entry) => (
+         <h1>{entry.username}</h1>
+      ))}</div>
     )
 
 }
