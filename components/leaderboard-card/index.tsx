@@ -1,20 +1,23 @@
-import React from 'react'
+import React, {useState}  from 'react'
 
 type Props = {
   className: string,
-  cardTitle: String,
-  cardContents: String
+  username: string,
+  wpm: number,
+  errors: number,
+  accuracy: number
+  position: number;
 }
 
 const LeaderboardCard = (props: Props) => {
+
   return (
-      <div className={props.className}>
-        <a>
-          <h3>{props.cardTitle}</h3>
-          <p className="desc">
-            {props.cardContents}
-          </p>
-        </a>
+      <div className="leaderboard-card">
+        <h3>{props.position}</h3>
+        <h3>{props.username.toUpperCase()}</h3>
+        <h2>{props.wpm} word/sec</h2>
+        <p>{props.errors} errors</p>
+        <p>{props.accuracy}% accuracy</p>
       </div>
   )
 }

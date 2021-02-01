@@ -1,0 +1,29 @@
+.leaderboard-card {
+  border: 4px solid black;
+  border-radius: 10px;
+  width: 50%;
+  text-align: center;
+  margin: 10px auto auto auto;
+  padding: 30px;
+}
+
+.leaderboard-card h3, h2 {
+  display: inline;
+  color: red;
+  font-size: 24px;
+  padding-right: 40px;
+}
+
+.leaderboard-card p {
+  display: inline;
+  color: black;
+  font-size: 18px;
+  padding: 40px;
+}
+
+.leaderboard-header {
+  text-align: center;
+  font-size: 44px;
+  margin-bottom: 4rem;
+  margin-top: 4rem;
+}

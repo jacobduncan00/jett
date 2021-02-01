@@ -3,4 +3,5 @@ export interface LeaderboardEntry {
     wpm: number;
     errors: number;
     accuracy: number;
+    position: number;
 }

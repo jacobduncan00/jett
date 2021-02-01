@@ -11,11 +11,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
   });
 
   try {
-    client.connect();
+    await client.connect();
     const leaderboardData = await client.query("SELECT * FROM leaderboard");
-    console.log("ROWS", leaderboardData.rows);
     response.status(200).send(leaderboardData.rows);
-    client.end();
+    await client.end();
   } catch (error) {
     response.status(409).send({});
   }
