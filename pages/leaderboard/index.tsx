@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { LeaderboardEntry } from "../../types/LeaderBoardEntry";
+// This needs to be Types not types
+import { LeaderboardEntry } from "../../Types/LeaderBoardEntry";
 import LeaderboardCard from "../../components/leaderboard-card/index";
 
 const leaderboard = () => {
