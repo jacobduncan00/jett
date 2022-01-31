@@ -11,6 +11,8 @@
 - [] remove settings & theme from /homepage until I finish it
 - [] dockerize a mysql server to startup when the frontend does
 
+- [] fix WPM calculation with varying duration and number of sentences!!!!
+
 # UPDATE
 
 - The postgres / heroku connection works on vercel!
