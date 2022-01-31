@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// This needs to be Types not types
 import { LeaderboardEntry } from "../../Types/LeaderBoardEntry";
 import LeaderboardCard from "../../components/leaderboard-card/index";
 
@@ -9,17 +8,19 @@ const leaderboard = () => {
     LeaderboardEntry[]
   >([]);
 
-  const [pos, setPosition] = useState(1);
+  const addPosition = () => {
+    let i = 1;
+    leaderboardEntries.map((entry: LeaderboardEntry) => {
+      entry.position = `#${i}`;
+      console.log(entry);
+      i++;
+    });
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get("/api/leaderboard");
-        response.data.forEach((entry: LeaderboardEntry) => {
-          entry.position = pos;
-          console.log(entry.position);
-          setPosition(pos + 1);
-        });
         setLeaderboardEntries(
           response.data.sort(function (
             a: LeaderboardEntry,
@@ -30,6 +31,7 @@ const leaderboard = () => {
             return b.wpm - a.wpm;
           })
         );
+        addPosition();
       } catch (e) {
         console.log(e);
       }

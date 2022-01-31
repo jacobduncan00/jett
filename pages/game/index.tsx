@@ -5,15 +5,18 @@ import EntryModal from "../../components/entry-modal";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { useStore } from "../../store";
 
 let interval = null;
 function Game() {
+  const sentencesToGenerate = useStore((state) => state.sentences);
+  const gameTime = useStore((state) => state.time);
   const inputRef = useRef(null);
   const outputRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
   const [input, setInput] = useState("");
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState(parseInt(gameTime));
   const [index, setIndex] = useState(0);
   const [correctIndex, setCorrectIndex] = useState(0);
   const [isError, setIsError] = useState(false);
@@ -26,34 +29,37 @@ function Game() {
 
   const sendToDb = (name: string) => {
     console.log("called sendToDb from game");
-    axios.post("/api/insert", {
-      userName: name,
-      wpm: wpm,
-      numberOfErrors: errorIndex,
-      accuracy: Math.round(accuracy * 0.1),
-    }).then((data: AxiosResponse) => {
-      if (data.data === "Success") {
-        alert(`${name} with a score of ${wpm} added to the leaderboard!`)
-      }
-    }).catch((response: AxiosError) => {
-      if (response.response!.status === 409) {
-        alert("Username already in the leaderboards, please pick another one!")
-        handleClose()
-      } 
-    });
+    axios
+      .post("/api/insert", {
+        userName: name,
+        wpm: wpm,
+        numberOfErrors: errorIndex,
+        accuracy: Math.round(accuracy * 0.1),
+      })
+      .then((data: AxiosResponse) => {
+        if (data.data === "Success") {
+          alert(`${name} with a score of ${wpm} added to the leaderboard!`);
+        }
+      })
+      .catch((response: AxiosError) => {
+        if (response.response!.status === 409) {
+          alert(
+            "Username already in the leaderboards, please pick another one!"
+          );
+          handleClose();
+        }
+      });
   };
 
   useEffect(() => {
     // Hit the backend for the corpus in which the user will type
     const res = axios.post("/api/sentences", {
-      numSentences: 1
+      numSentences: parseInt(sentencesToGenerate),
     });
     res.then((data) => {
       setCorpus(data.data.content);
     });
   }, []);
-
-
 
   const handleClose = () => {
     setShowModal(false);
@@ -108,7 +114,7 @@ function Game() {
       setIsError(false);
       setNumOfErrors(0);
       outputRef.current.innerHTML += key;
-    } else if(event.shiftKey) {
+    } else if (event.shiftKey) {
       // if user presses Shift key, don't do anything cuz its not an error and its not correct always
     } else {
       setErrorIndex(errorIndex + 1);
@@ -140,106 +146,103 @@ function Game() {
   return (
     <div>
       <div className={styles.setting_headercontainer}>
-      <Link href="/">
-        <div className={styles.wrapperDiv}>
-          <a className={styles.chevronLink} href="/" >
-            <FaChevronLeft size={32} />
-          </a>
-        </div>
+        <Link href="/">
+          <div className={styles.wrapperDiv}>
+            <a className={styles.chevronLink} href="/">
+              <FaChevronLeft size={32} />
+            </a>
+          </div>
         </Link>
-    </div >
-    <div className={styles.game}>
-      <div className={styles.row}>
-        <div className="col-sm-6 col-md-2 order-md-0 px-5">
-          <ul className="list-unstyled text-center small">
-            <GameStats name="Timer" data={duration} style={""} />
-            <GameStats style={""} name="Errors" data={errorIndex} />
-            <GameStats
-              style={""}
-              name="Acuracy"
-              data={`${Math.round(accuracy * 0.1)}%`}
-            />
-          </ul>
-        </div>
-        <div className="col-sm-12 col-md-8 order-md-1">
-          <div className="container">
-            <div className="text-center mt-4 header">
-              <div className="control my-5">
-                {ended ? (
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => window.location.reload()}
-                  >
-                    Reload
-                  </button>
-                ) : started ? (
-                  <button
-                    className="btn btn-outline-success"
-                    disabled
-                  >
-                    Type!
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-outline-success"
-                    onClick={handleStart}
-                  >
-                    Click here to start!
-                  </button>
-                )}
-                <span className="btn-circle-animation" />
+      </div>
+      <div className={styles.game}>
+        <div className={styles.row}>
+          <div className="col-sm-6 col-md-2 order-md-0 px-5">
+            <ul className="list-unstyled text-center small">
+              <GameStats name="Timer" data={duration} style={""} />
+              <GameStats style={""} name="Errors" data={errorIndex} />
+              <GameStats
+                style={""}
+                name="Acuracy"
+                data={`${Math.round(accuracy * 0.1)}%`}
+              />
+            </ul>
+          </div>
+          <div className="col-sm-12 col-md-8 order-md-1">
+            <div className="container">
+              <div className="text-center mt-4 header">
+                <div className="control my-5">
+                  {ended ? (
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => window.location.reload()}
+                    >
+                      Reload
+                    </button>
+                  ) : started ? (
+                    <button className="btn btn-outline-success" disabled>
+                      Type!
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={handleStart}
+                    >
+                      Click here to start!
+                    </button>
+                  )}
+                  <span className="btn-circle-animation" />
+                </div>
               </div>
+
+              {ended ? (
+                <div className="bg-dark-complete mono p-4 mt-5 lead rounded">
+                  <h1>
+                    <span>
+                      Congratulations you got a score of{" "}
+                      <span className="green">{wpm}</span> WPM!
+                    </span>
+                  </h1>
+                  {/* This button needs styling */}
+                  <button className="modalButton" onClick={() => renderModal()}>
+                    Add to Leaderboard
+                  </button>
+                  {showModal ? (
+                    <EntryModal
+                      showModal={showModal}
+                      headerText="Add To Leaderboard"
+                      handleClose={handleClose}
+                      sendToDb={sendToDb}
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              ) : started ? (
+                <div
+                  className={`text-light mono quotes${
+                    started ? " active" : ""
+                  }${isError ? " is-error" : ""}`}
+                  tabIndex={0}
+                  onKeyDown={handleTyping}
+                  ref={inputRef}
+                >
+                  {input}
+                </div>
+              ) : (
+                <div
+                  className="bg-dark mono quotes text-muted"
+                  tabIndex={-1}
+                  ref={inputRef}
+                >
+                  {input}
+                </div>
+              )}
+
+              <div className="p-4 mt-4 bg-dark rounded lead" ref={outputRef} />
             </div>
-
-            {ended ? (
-              <div className="bg-dark-complete mono p-4 mt-5 lead rounded">
-                <h1>
-                  <span>
-                    Congratulations you got a score of{" "}
-                    <span className="green">{wpm}</span> WPM!
-                  </span>
-                </h1>
-                {/* This button needs styling */}
-                <button className="modalButton" onClick={() => renderModal()}>
-                  Add to Leaderboard
-                </button>
-                {showModal ? (
-                  <EntryModal
-                    showModal={showModal}
-                    headerText="Add To Leaderboard"
-                    handleClose={handleClose}
-                    sendToDb={sendToDb}
-                  />
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            ) : started ? (
-              <div
-                className={`text-light mono quotes${started ? " active" : ""}${
-                  isError ? " is-error" : ""
-                }`}
-                tabIndex={0}
-                onKeyDown={handleTyping}
-                ref={inputRef}
-              >
-                {input}
-              </div>
-            ) : (
-              <div
-                className="bg-dark mono quotes text-muted"
-                tabIndex={-1}
-                ref={inputRef}
-              >
-                {input}
-              </div>
-            )}
-
-            <div className="p-4 mt-4 bg-dark rounded lead" ref={outputRef} />
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

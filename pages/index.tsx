@@ -1,8 +1,8 @@
-import React from "react";
-import Homepage from "./homepage/index";
+import React from 'react';
+import Homepage from './homepage/index';
 
 const App = () => {
-    return <Homepage />;
+  return <Homepage />;
 };
 
 export default App;

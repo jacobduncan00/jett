@@ -14,7 +14,8 @@
     "pg": "^8.5.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-icons": "^3.11.0"
+    "react-icons": "^3.11.0",
+    "zustand": "^3.6.9"
   },
   "devDependencies": {
     "@types/mongoose": "^5.10.3",

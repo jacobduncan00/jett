@@ -1,6 +1,12 @@
 version: "3.7"
 
 services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
   jett:
     ports:
       - 3000:3000
